@@ -1,9 +1,5 @@
 ""
-"" Thanks:
-""   Gary Bernhardt  <destroyallsoftware.com>
-""   Drew Neil  <vimcasts.org>
-""   Tim Pope  <tbaggery.com>
-""   Janus  <github.com/carlhuda/janus>
+"" Thanks to: Mislav Marohnic
 ""
 
 set nocompatible
@@ -24,10 +20,13 @@ set showcmd     " display incomplete commands
 " for backgrounded buffers
 set hidden
 
+"" Linenumbers please
+set number
+
 "" Whitespace
 set nowrap                        " don't wrap lines
-set tabstop=2                     " a tab is two spaces
-set shiftwidth=2                  " an autoindent (with <<) is two spaces
+set softtabstop=4                     " a tab is two spaces
+set shiftwidth=4                  " an autoindent (with <<) is two spaces
 set expandtab                     " use spaces, not tabs
 set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
@@ -135,3 +134,6 @@ if has("statusline") && !&cp
 endif
 
 let g:CommandTMaxHeight=10
+
+" Clear spaces
+autocmd BufWritePre * :%s/\s\+$//e
