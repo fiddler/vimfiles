@@ -9,9 +9,9 @@ set encoding=utf-8
 call pathogen#infect()
 filetype plugin indent on
 
-set background=dark
-color molokai
-set nonumber
+" set background=dark
+colorscheme molokai
+let g:molokai_original = 0
 set ruler       " show the cursor position all the time
 set cursorline
 set showcmd     " display incomplete commands
@@ -135,5 +135,6 @@ endif
 
 let g:CommandTMaxHeight=10
 
-" Clear spaces
+let &t_Co=256
+
 autocmd BufWritePre * :%s/\s\+$//e

@@ -34,3 +34,6 @@
 [submodule "bundle/molokai"]
 	path = bundle/molokai
 	url = https://github.com/mrtazz/molokai.vim
+[submodule "bundle/zencoding-vim"]
+	path = bundle/zencoding-vim
+        url = https://github.com/mattn/zencoding-vim
