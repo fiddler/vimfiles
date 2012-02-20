@@ -143,4 +143,4 @@ set t_ts=^[]1;
 set t_fs=^G
 
 " Zencoding
-g:user_zen_leader_key = '<c-k>'
+let g:user_zen_leader_key = '<c-k>'
