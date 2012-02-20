@@ -138,3 +138,9 @@ let g:CommandTMaxHeight=10
 let &t_Co=256
 
 autocmd BufWritePre * :%s/\s\+$//e
+
+set t_ts=^[]1;
+set t_fs=^G
+
+" Zencoding
+g:user_zen_leader_key = '<c-k>'
