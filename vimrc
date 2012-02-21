@@ -77,9 +77,9 @@ map Q gq
 " Leaderkey to ,
 let mapleader=","
 
-" http://vimcasts.org/e/14
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
-map <leader>f :CommandTFlush<cr>\|:CommandT %%<cr>
+map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
 " ignore Rubinius, Sass cache files
 set wildignore+=*.rbc,*.scssc,*.sassc
