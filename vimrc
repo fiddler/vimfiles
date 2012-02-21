@@ -23,13 +23,15 @@ set hidden
 "" Linenumbers please
 set number
 
-"" Whitespace
-set nowrap                        " don't wrap lines
-set softtabstop=4                     " a tab is two spaces
+"" Whitespace & indent
+set wrap                          " wrap lines
+set softtabstop=4                 " a tab is 4 spaces
 set shiftwidth=4                  " an autoindent (with <<) is two spaces
 set expandtab                     " use spaces, not tabs
 set list                          " Show invisible characters
 set backspace=indent,eol,start    " backspace through everything in insert mode
+set ai                            "Auto indent
+set si                            "Smart indent
 " List chars
 set listchars=""                  " Reset the listchars
 set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
@@ -43,12 +45,6 @@ set hlsearch                      " highlight matches
 set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
-
-function s:setupWrapping()
-  set wrap
-  set wrapmargin=2
-  set textwidth=72
-endfunction
 
 if has("autocmd")
   " In Makefiles, use real tabs, not tabs expanded to spaces
@@ -78,16 +74,9 @@ map Q gq
 " clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
 
+" Leaderkey to ,
 let mapleader=","
 
-map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
-map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
-map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
-map <leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
-map <leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
-map <leader>gf :CommandTFlush<cr>\|:CommandT features<cr>
-map <leader>gg :topleft 100 :split Gemfile<cr>
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 " http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
@@ -95,6 +84,7 @@ map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 " ignore Rubinius, Sass cache files
 set wildignore+=*.rbc,*.scssc,*.sassc
 
+" jump between two last opened buffers with ,,
 nnoremap <leader><leader> <c-^>
 
 " find merge conflict markers
@@ -114,9 +104,6 @@ map <Right> :echo "no!"<cr>
 map <Up>    :echo "no!"<cr>
 map <Down>  :echo "no!"<cr>
 
-set backupdir=~/.vim/_backup    " where to put backup files.
-set directory=~/.vim/_temp      " where to put swap files.
-
 if has("statusline") && !&cp
   set laststatus=2  " always show the status bar
 
@@ -127,20 +114,49 @@ if has("statusline") && !&cp
   set statusline+=%{fugitive#statusline()}
 
   " Finish the statusline
-  set statusline+=Line:%l/%L[%p%%]
-  set statusline+=Col:%v
-  set statusline+=Buf:#%n
-  set statusline+=[%b][0x%B]
+  set statusline+=\ Line:%l/%L[%p%%]
+  set statusline+=\ Col:%v
+  set statusline+=\ Buf:#%n
+  set statusline+=\ [%b][0x%B]
 endif
 
 let g:CommandTMaxHeight=10
 
 let &t_Co=256
 
+" Remove white spaces when saving
 autocmd BufWritePre * :%s/\s\+$//e
 
+" show filename in terminal
 set t_ts=^[]1;
 set t_fs=^G
 
 " Zencoding
 let g:user_zen_leader_key = '<c-k>'
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" No backup
+set nobackup
+set nowb
+set noswapfile
+
+" Peristent undo
+try
+    if MySys() == "windows"
+        set undodir=C:\Windows\Temp
+    else
+        set undodir=~/.vim_runtime/undodir
+    endif
+
+    set undofile
+catch
+endtry
+
+" Use the arrows to switch between buffers
+map <right> :bn<cr>
+map <left> :bp<cr>
