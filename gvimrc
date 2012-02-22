@@ -1,5 +1,5 @@
-color vwilight
-set guifont=Menlo\ Regular:h14
+color molokai
+set guifont=Inconsolata\ Regular:h14
 set linespace=2
 set antialias
 
@@ -7,7 +7,7 @@ set antialias
 set visualbell
 
 set guioptions-=T   " No toolbar
-set guioptions-=r   " No scrollbars
+" set guioptions-=r   " No scrollbars
 
 if has("gui_macvim")
   " Fullscreen takes up entire screen
