@@ -37,32 +37,38 @@ set listchars=""                  " Reset the listchars
 set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
 set listchars+=trail:.            " show trailing spaces as dots
 set listchars+=extends:>          " The character to show in the last column when wrap is
-                                  " off and the line continues beyond the right of the screen
+" off and the line continues beyond the right of the screen
 set listchars+=precedes:<         " The character to show in the first column when wrap is
-                                  " off and the line continues beyond the left of the screen
+" off and the line continues beyond the left of the screen
 "" Searching
 set hlsearch                      " highlight matches
 set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
 
+function s:setupWrapping()
+    set wrap
+    set wrapmargin=2
+    set textwidth=72
+endfunction
+
 if has("autocmd")
-  " In Makefiles, use real tabs, not tabs expanded to spaces
-  au FileType make set noexpandtab
+    " In Makefiles, use real tabs, not tabs expanded to spaces
+    au FileType make set noexpandtab
 
-  " Make sure all markdown files have the correct filetype set and setup wrapping
-  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
+    " Make sure all markdown files have the correct filetype set and setup wrapping
+    au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown | call s:setupWrapping()
 
-  " Treat JSON files like JavaScript
-  au BufNewFile,BufRead *.json set ft=javascript
+    " Treat JSON files like JavaScript
+    au BufNewFile,BufRead *.json set ft=javascript
 
-  " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-  au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
+    " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+    au FileType python set softtabstop=4 tabstop=4 shiftwidth=4 textwidth=79
 
-  " Remember last location in file, but not for commit messages.
-  " see :help last-position-jump
-  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g`\"" | endif
+    " Remember last location in file, but not for commit messages.
+    " see :help last-position-jump
+    au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g`\"" | endif
 endif
 
 " provide some context when editing
@@ -105,19 +111,19 @@ map <Up>    :echo "no!"<cr>
 map <Down>  :echo "no!"<cr>
 
 if has("statusline") && !&cp
-  set laststatus=2  " always show the status bar
+    set laststatus=2  " always show the status bar
 
-  " Start the status line
-  set statusline=%f\ %m\ %r
+    " Start the status line
+    set statusline=%f\ %m\ %r
 
-  " Add fugitive
-  set statusline+=%{fugitive#statusline()}
+    " Add fugitive
+    set statusline+=%{fugitive#statusline()}
 
-  " Finish the statusline
-  set statusline+=\ Line:%l/%L[%p%%]
-  set statusline+=\ Col:%v
-  set statusline+=\ Buf:#%n
-  set statusline+=\ [%b][0x%B]
+    " Finish the statusline
+    set statusline+=\ Line:%l/%L[%p%%]
+    set statusline+=\ Col:%v
+    set statusline+=\ Buf:#%n
+    set statusline+=\ [%b][0x%B]
 endif
 
 let g:CommandTMaxHeight=10
@@ -160,3 +166,6 @@ endtry
 " Use the arrows to switch between buffers
 map <right> :bn<cr>
 map <left> :bp<cr>
+
+" Allow jk to work as escape
+:imap jk <Esc>
