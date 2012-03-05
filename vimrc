@@ -169,3 +169,6 @@ map <left> :bp<cr>
 
 " Allow jk to work as escape
 :imap jk <Esc>
+
+" PHP syntax check
+map <C-D> :!php -l %<CR>
