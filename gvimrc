@@ -13,3 +13,6 @@ if has("gui_macvim")
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
 end
+
+" Allow jk to work as escape
+:imap jk <Esc>
