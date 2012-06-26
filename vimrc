@@ -7,6 +7,7 @@ syntax enable
 set encoding=utf-8
 
 call pathogen#infect()
+filetype plugin on
 filetype plugin indent on
 
 " set background=dark
@@ -171,4 +172,4 @@ map <left> :bp<cr>
 :imap jk <Esc>
 
 " PHP syntax check
-map <C-D> :!php -l %<CR>
+nmap <leader>p :!php -l %<CR>

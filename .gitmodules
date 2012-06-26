@@ -37,3 +37,9 @@
 [submodule "bundle/zencoding-vim"]
 	path = bundle/zencoding-vim
         url = https://github.com/mattn/zencoding-vim
+[submodule "bundle/jshint.vim"]
+	path = bundle/jshint
+	url = https://github.com/manalang/jshint.vim
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
