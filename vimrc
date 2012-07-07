@@ -88,8 +88,8 @@ map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
-" ignore Rubinius, Sass cache files
-set wildignore+=*.rbc,*.scssc,*.sassc
+" ignore all kinds of stuff
+set wildignore+=*.rbc,*.scssc,*.sassc,*.eot,*.ttf,*.woff,*.svg,node_modules,.sass-cache,.git,.out
 
 " jump between two last opened buffers with ,,
 nnoremap <leader><leader> <c-^>
@@ -147,6 +147,9 @@ set autoread
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" Fast quit
+nmap <leader>q :q!<cr>
+
 " No backup
 set nobackup
 set nowb
@@ -173,3 +176,6 @@ map <left> :bp<cr>
 
 " PHP syntax check
 nmap <leader>p :!php -l %<CR>
+
+" Go back to command mode when focus is lost
+au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
