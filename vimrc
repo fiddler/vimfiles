@@ -46,6 +46,7 @@ set hlsearch                      " highlight matches
 set incsearch                     " incremental searching
 set ignorecase                    " searches are case insensitive...
 set smartcase                     " ... unless they contain at least one capital letter
+set relativenumber
 
 function s:setupWrapping()
     set wrap
@@ -88,8 +89,12 @@ map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
 
-" ignore all kinds of stuff
-set wildignore+=*.rbc,*.scssc,*.sassc,*.eot,*.ttf,*.woff,*.svg,node_modules,.sass-cache,.git,.out
+" Wildmenu
+if has("wildmenu")
+set wildignore+=*.rbc,*.scssc,*.sassc,*.eot,*.ttf,*.woff,.sass-cache,.out
+set wildignore+=.DS_Store,.git,.hg,.svn,node_modules,img,images
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.svg
+endif
 
 " jump between two last opened buffers with ,,
 nnoremap <leader><leader> <c-^>
@@ -105,11 +110,20 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" disable cursor keys in normal mode
-map <Left>  :echo "no!"<cr>
-map <Right> :echo "no!"<cr>
-map <Up>    :echo "no!"<cr>
-map <Down>  :echo "no!"<cr>
+" fast way to create new split
+nnoremap <leader>w <C-w>v<C-w>l
+
+" disable cursor keys & fix behaviour
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+nnoremap j gj
+nnoremap k gk
 
 if has("statusline") && !&cp
     set laststatus=2  " always show the status bar
@@ -155,27 +169,33 @@ set nobackup
 set nowb
 set noswapfile
 
-" Peristent undo
-try
-    if MySys() == "windows"
-        set undodir=C:\Windows\Temp
-    else
-        set undodir=~/.vim_runtime/undodir
-    endif
-
-    set undofile
-catch
-endtry
-
 " Use the arrows to switch between buffers
 map <right> :bn<cr>
 map <left> :bp<cr>
 
-" Allow jk to work as escape
+" Allow jk & jj to work as escape
 :imap jk <Esc>
+:imap jj <Esc>
 
 " PHP syntax check
 nmap <leader>p :!php -l %<CR>
 
 " Go back to command mode when focus is lost
 au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
+
+" Set swaps & backups location
+set directory=~/.vim/swaps
+set backupdir=~/.vim/backups
+
+" Disable help key
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" Persistent undo
+set undodir=~/.vim_runtime/undodir
+set undofile
+
+" Match brackets with tab
+nnoremap <tab> %
+vnoremap <tab> %
